@@ -1,0 +1,42 @@
+@model List<Customer>
+
+<h2>Customers</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add Customer</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Customer Name</th>
+            <th>Contact Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Customer c in Model)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.CustomerName</td>
+                <td>@c.ContactName</td>
+                <td>@c.Email</td>
+                <td>@c.Phone</td>
+                <td>@c.Address</td>
+                <td>@c.City</td>
+                <td>@c.State</td>
+                <td>@c.ZipCode</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@c.Id" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this customer?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
