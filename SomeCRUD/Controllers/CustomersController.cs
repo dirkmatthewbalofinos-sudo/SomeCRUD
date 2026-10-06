@@ -7,11 +7,26 @@ namespace SomeCRUD.Controllers
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public CustomersController(ApplicationDbContext db) { _db = db; }
 
-        public IActionResult Index()
+        public CustomersController(ApplicationDbContext db) 
+        { 
+            _db = db; 
+        }
+
+       
+        public IActionResult Index(string? searchString)
         {
-            return View(_db.Customers.ToList());
+            ViewData["CurrentFilter"] = searchString;
+
+            var customers = _db.Customers.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                customers = customers.Where(c => c.CustomerName.ToLower().Contains(searchString.ToLower())
+                                            || c.City.Contains(searchString.ToLower()));
+            }
+
+            return View(customers.ToList());
         }
 
         public IActionResult Create()
